@@ -1,0 +1,7 @@
+{
+  "name": "DigitalCookbook",
+  "description": "Example host for native messaging",
+  "path": "C:\\dev\\Java\\DigitalCookbook.bat",
+  "type": "stdio",
+  "allowed_extensions" : [ "dcb@dcb.org"]
+}

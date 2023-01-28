@@ -1,0 +1,9 @@
+{
+  "name": "com.eugo.digitalcookbook",
+  "description": "Example host for native messaging",
+  "path": "C:\\Users\\Eugen\\Desktop\\DigitalCookbook.bat",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://ecccoaalihoacacacjgffeialamgiple/"
+  ]
+}
