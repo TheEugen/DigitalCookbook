@@ -150,6 +150,7 @@ public class Main extends Application
 		// init and configure the stages
 		initStages(primaryStage);
 		
+		// create the window objects
 		windowNewCB = new WindowNewCookbook(stageNewCB, (int) screenBounds.getMaxX() / 5, (int) screenBounds.getMaxY() / 6);
 		windowNewRecipe = new WindowNewRecipe(stageNewRecipe, (int) screenBounds.getMaxX() / 2, (int) screenBounds.getMaxY() / 2);
 		windowEditRecipe = new WindowEditRecipe(stageEditRecipe, (int) screenBounds.getMaxX() / 2, (int) screenBounds.getMaxY() / 2);
@@ -158,7 +159,7 @@ public class Main extends Application
 		windowCustomUnit = windowSettings.new WindowCustomUnit(stageCustomUnit, (int) screenBounds.getMaxX() / 6, (int) screenBounds.getMaxY() / 12);
 		windowWarning = new WindowWarning(stageWarning, (int) screenBounds.getMaxX() / 6, (int) screenBounds.getMaxY() / 12);
 		
-		// build layouts
+		// build window layouts
 		windowMain.buildLayout();		
 		windowNewCB.buildLayout();		
 		windowNewRecipe.buildLayout();	
@@ -168,8 +169,10 @@ public class Main extends Application
 		windowCustomUnit.buildLayout();
 		windowWarning.buildLayout();
 		
-		// communication with web-ext
+		// init jsonhandler for communication with web-extension
 		jsonHandler = new JSONHandler(this);
+		
+		// threading to avoid IO block
 		tReadInput = new Thread(jsonHandler);
 		tReadInput.start();
 			

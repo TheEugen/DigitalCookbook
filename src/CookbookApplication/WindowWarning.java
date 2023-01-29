@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public class WindowWarning extends Window
 {
-	private Text txt;
+	private Text txt = new Text();
 	private Class<?> cl;
 
 	public WindowWarning(Stage stage, int xRes, int yRes)
@@ -33,16 +33,17 @@ public class WindowWarning extends Window
 		
 		WindowMain windowMain = (WindowMain) stage.getOwner().getUserData();
 		
-		txt = new Text();
-		
-		HBox hb0 = new HBox(10, txt);
-		hb0.setAlignment(Pos.CENTER);
-		
+		// YES button
 		Button btn_yes = new Button(windowMain.getDataManager().getText("tBtn_deleteWarningYes"));
 		btn_yes.setOnAction(hmEventHandler.get("yes"));
 		
+		// NO button
 		Button btn_no = new Button(windowMain.getDataManager().getText("tBtn_deleteWarningNo"));
 		btn_no.setOnAction(hmEventHandler.get("no"));
+
+		// HBoxes
+		HBox hb0 = new HBox(10, txt);
+		hb0.setAlignment(Pos.CENTER);
 		
 		HBox hb1 = new HBox(10, btn_yes, btn_no);
 		hb1.setAlignment(Pos.CENTER);
@@ -61,6 +62,7 @@ public class WindowWarning extends Window
 	@Override
 	protected void initHashMap(Object...args)
 	{
+		// delete the cookbook or recipe
 		hmEventHandler.put("yes", new EventHandler<ActionEvent>()
 							{
 								@Override
@@ -80,6 +82,7 @@ public class WindowWarning extends Window
 								}
 							});
 		
+		// dont delete and close the window
 		hmEventHandler.put("no", new EventHandler<ActionEvent>()
 							{
 								@Override

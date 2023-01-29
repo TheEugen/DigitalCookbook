@@ -38,14 +38,17 @@ public class UserConfig implements Serializable
 	
 	public UserConfig()
 	{
+		// default units
 		units.add(new Unit("mg"));
 		units.add(new Unit("g"));
 		units.add(new Unit("kg"));;
 		units.add(new Unit("TL"));
 		units.add(new Unit("EL"));
 
+		// get user system language
 		Locale locale = Locale.getDefault();
-				
+		
+		// if german set to german, else to english
 		if(locale.equals(new Locale("de", "DE")))
 			workingLang = languages[0];
 		else
@@ -54,10 +57,12 @@ public class UserConfig implements Serializable
 
 	public static UserConfig loadUserConfig(String path)
 	{	
+		// load the config file C:/Users/xxx/Rezepte/user_config.cfg
 		File file = new File(path);
 		
 		UserConfig cfg;
 		
+		// if user_config.cfg exists load the file
 		if(file.exists())
 		{
 			try(FileInputStream fis = new FileInputStream(path);
@@ -69,16 +74,18 @@ public class UserConfig implements Serializable
 				catch (Exception e)
 				{
 					e.printStackTrace();
+					
+					return null;
 				}
 		}
+		// otherwise create a new one
 		else
 		{
 			cfg = new UserConfig();
 			UserConfig.saveUserConfig(cfg, path.replace("user_config.cfg", ""));
 			return cfg;
 		}
-		
-		return null;
+
 	}
 	
 	public static void saveUserConfig(UserConfig cfg, String path)

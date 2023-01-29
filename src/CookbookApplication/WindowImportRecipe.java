@@ -23,6 +23,7 @@ public class WindowImportRecipe extends Window
 		super(stage, xRes, yRes);
 	}
 	
+	// cleanup routine
 	public void cleanUp()
 	{
 		ta.setText("");
@@ -74,6 +75,7 @@ public class WindowImportRecipe extends Window
 	@Override
 	protected void initHashMap(Object...args)
 	{
+		// import a recipe
 		hmEventHandler.put("import", new EventHandler<ActionEvent>()
 							{
 								@Override
@@ -120,6 +122,7 @@ public class WindowImportRecipe extends Window
 								}
 							});		
 		
+		// cancel
 		hmEventHandler.put("cancel", new EventHandler<ActionEvent>()
 								{
 									@Override

@@ -22,7 +22,9 @@ public class WindowSettings extends Window
 {
 	public class WindowCustomUnit extends WindowSettings
 	{	
-		private TextField tf; 
+		private TextField tf = new TextField();
+		private Text txt_error = new Text();
+		private Text txt;
 		
 		public WindowCustomUnit(Stage stage, int xRes, int yRes)
 		{
@@ -39,23 +41,23 @@ public class WindowSettings extends Window
 			
 			initHashMap(windowMain, dataManager);
 			
-			Text txt = new Text(dataManager.getText("tTxt_addCustomUnit"));
-			txt_error = new Text();
-
-			HBox hb0 = new HBox(10, txt);
-			grid.add(hb0, 0, 0);
-			
-			tf = new TextField();
-			
-			HBox hb1 = new HBox(10, tf);
-			grid.add(hb1, 0, 1);
-			
+			// SAVE button
 			Button btn_save = new Button(dataManager.getText("tBtn_save"));
 			btn_save.setOnAction(hmEventHandler.get("save"));
 			
+			// CANCEL button
 			Button btn_cancel = new Button(dataManager.getText("tBtn_cancel"));
 			btn_cancel.setOnAction(hmEventHandler.get("cancel"));
 			
+			txt = new Text(dataManager.getText("tTxt_addCustomUnit"));
+			
+			// HBoxes
+			HBox hb0 = new HBox(10, txt);
+			grid.add(hb0, 0, 0);
+			
+			HBox hb1 = new HBox(10, tf);
+			grid.add(hb1, 0, 1);
+		
 			HBox hb2 = new HBox(10, btn_save, btn_cancel);
 			grid.add(hb2, 0, 2);
 			
@@ -69,6 +71,7 @@ public class WindowSettings extends Window
 			WindowMain windowMain = (WindowMain) args[0];
 			DataManager dataManager = (DataManager) args[1];
 			
+			// save new custom unit
 			hmEventHandler.put("save", new EventHandler<ActionEvent>()
 			{
 				@Override
@@ -84,7 +87,9 @@ public class WindowSettings extends Window
 					stage.close();
 				}
 			});
-
+			
+			// close the custom unit window
+			// TODO: ask discard
 			hmEventHandler.put("cancel", new EventHandler<ActionEvent>()
 			{
 				@Override
@@ -107,7 +112,7 @@ public class WindowSettings extends Window
 	}
 	
 	
-	private Text txt_error;
+	
 	private String workingLang;
 	
 	
@@ -127,58 +132,69 @@ public class WindowSettings extends Window
 		GridPane grid = getGrid();
 		stage.setUserData(this);
 		
+		// windowmain and datamanager reference
 		WindowMain windowMain = (WindowMain) stage.getOwner().getUserData();
 		DataManager dataManager = windowMain.getDataManager();
 		
+		// suppress cb delete warning checkbox
 		CheckBox check_suppress_cb = new CheckBox();
-		CheckBox check_suppress_r = new CheckBox();
-		DirectoryChooser dirChooser = new DirectoryChooser();
-		ComboBox<String> comboBox_lang = new ComboBox<String>();
-		
-		initHashMap(windowMain, dataManager, check_suppress_cb, check_suppress_r, dirChooser, comboBox_lang);
-		
-		Text txt_suppress_cb = new Text(dataManager.getText("tTxt_cfgSuppressCookbook"));
-		Text txt_suppress_r = new Text(dataManager.getText("tTxt_cfgSuppressRecipe"));
-			
 		check_suppress_cb.setOnAction(hmEventHandler.get("suppress_cb"));
 		check_suppress_cb.setSelected(dataManager.getUserConfig().getSuppressWarningCookbook());
-			
+		
+		// suppress recipe delete warning checkbox
+		CheckBox check_suppress_r = new CheckBox();
 		check_suppress_r.setOnAction(hmEventHandler.get("suppress_r"));
 		check_suppress_r.setSelected(dataManager.getUserConfig().getSuppressWarningRecipe());
 		
+		// save location directory chooser
+		DirectoryChooser dirChooser = new DirectoryChooser();
+		dirChooser.setTitle(dataManager.getText("tFC_savePath"));
+		
+		// language combobox
+		ComboBox<String> comboBox_lang = new ComboBox<String>();
+		ObservableList<String> options = FXCollections.observableArrayList(dataManager.getUserConfig().getLanguages());	
+		comboBox_lang.setItems(options);
+		comboBox_lang.getSelectionModel().select(dataManager.getUserConfig().getWorkingLanguage());
+		
+		// texts
+		Text txt_suppress_cb = new Text(dataManager.getText("tTxt_cfgSuppressCookbook"));
+		Text txt_suppress_r = new Text(dataManager.getText("tTxt_cfgSuppressRecipe"));
+		Text txt_lang = new Text(dataManager.getText("tTxt_lang"));
+		
+		// ADD UNIT button
+		Button btn_addUnit = new Button(dataManager.getText("tBtn_addUnit"));
+		btn_addUnit.setOnAction(hmEventHandler.get("addUnit"));
+		
+		// CHOOSE DIRECTORY button
+		Button btn_dirChooser = new Button(dataManager.getText("tBtn_savePath"));
+		btn_dirChooser.setOnAction(hmEventHandler.get("dirChooser"));
+		
+		// SAVE button
+		Button btn_save = new Button(dataManager.getText("tBtn_save"));
+		btn_save.setOnAction(hmEventHandler.get("save"));
+		
+		// CANCEL button
+		Button btn_cancel = new Button(dataManager.getText("tBtn_cancel"));
+		btn_cancel.setOnAction(hmEventHandler.get("cancel"));
+		
+		// init hashmap
+		initHashMap(windowMain, dataManager, check_suppress_cb, check_suppress_r, dirChooser, comboBox_lang);
+		
+		// create HBox and add to grid
 		HBox hbR0C0 = new HBox(10, txt_suppress_cb, check_suppress_cb);	
 		grid.add(hbR0C0, 0, 0);
 		
 		HBox hbR1C0 = new HBox(10, txt_suppress_r, check_suppress_r);
 		grid.add(hbR1C0, 0, 1);
 		
-		Button btn_addUnit = new Button(dataManager.getText("tBtn_addUnit"));
-		btn_addUnit.setOnAction(hmEventHandler.get("addUnit"));
 		HBox hbR2C0 = new HBox(10, btn_addUnit);
 		grid.add(hbR2C0, 0, 2);
-		
-		Text txt_lang = new Text(dataManager.getText("tTxt_lang"));
-	
-		ObservableList<String> options = FXCollections.observableArrayList(dataManager.getUserConfig().getLanguages());	
-		comboBox_lang.setItems(options);
-		comboBox_lang.getSelectionModel().select(dataManager.getUserConfig().getWorkingLanguage());
-		
+
 		HBox hbR3C0 = new HBox(10, txt_lang, comboBox_lang);
 		grid.add(hbR3C0, 0, 3);
 			
-		dirChooser.setTitle(dataManager.getText("tFC_savePath"));
-			
-		Button btn_dirChooser = new Button(dataManager.getText("tBtn_savePath"));
-		btn_dirChooser.setOnAction(hmEventHandler.get("dirChooser"));
-
 		HBox hbR4C0 = new HBox(10, btn_dirChooser);
 		grid.add(hbR4C0, 0, 4);
-		
-		Button btn_save = new Button(dataManager.getText("tBtn_save"));
-		btn_save.setOnAction(hmEventHandler.get("save"));
-		
-		Button btn_cancel = new Button(dataManager.getText("tBtn_cancel"));
-		btn_cancel.setOnAction(hmEventHandler.get("cancel"));
 		
 		HBox hbR5C0 = new HBox(10, btn_save, btn_cancel);
 		hbR5C0.setAlignment(Pos.CENTER_RIGHT);
@@ -199,6 +215,7 @@ public class WindowSettings extends Window
 		@SuppressWarnings("unchecked")
 		ComboBox<String> lang = (ComboBox<String>) args[5];
 		
+		// suppress delete cookbook warning
 		hmEventHandler.put("suppress_cb", new EventHandler<ActionEvent>()
 										{
 											@Override 
@@ -209,6 +226,7 @@ public class WindowSettings extends Window
 											}
 										});
 		
+		// suppress delete recipe warning
 		hmEventHandler.put("suppress_r", new EventHandler<ActionEvent>()
 										{
 											@Override 
@@ -218,6 +236,7 @@ public class WindowSettings extends Window
 											}
 										});
 		
+		// show add custom unit window
 		hmEventHandler.put("addUnit", new EventHandler<ActionEvent>()
 								{
 									@Override
@@ -227,6 +246,7 @@ public class WindowSettings extends Window
 									}
 								});
 
+		// show dialog box to select save location for cookbooks and config files
 		hmEventHandler.put("dirChooser", new EventHandler<ActionEvent>()
 									{
 										@Override
@@ -237,7 +257,8 @@ public class WindowSettings extends Window
 												dataManager.getUserConfig().setSavePath(file.getAbsolutePath());
 										}
 									});
-				
+		
+		// save settings
 		hmEventHandler.put("save", new EventHandler<ActionEvent>()
 										{
 											@Override
@@ -252,7 +273,9 @@ public class WindowSettings extends Window
 													windowMain.getMainUI().update(windowMain.getStage());
 											}
 										});
-				
+		
+		// cancel
+		// TODO: discard
 		hmEventHandler.put("cancel", new EventHandler<ActionEvent>()
 										{
 											@Override

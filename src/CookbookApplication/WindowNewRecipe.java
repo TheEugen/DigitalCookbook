@@ -16,6 +16,7 @@ public class WindowNewRecipe extends WindowRecipe
 	@Override
 	protected void initHashMap(Object...args)
 	{
+		// select recipe from list and update the list
 		hmEventHandler.put("comboBox_recipe", new EventHandler <ActionEvent>()
 										{
 											@Override
@@ -37,6 +38,7 @@ public class WindowNewRecipe extends WindowRecipe
 											}
 										});
 		
+		// add ingredient via button
 		hmEventHandler.put("addIngredient", new EventHandler<ActionEvent>()
 									{
 										@Override
@@ -50,6 +52,7 @@ public class WindowNewRecipe extends WindowRecipe
 										}
 									});
 		
+		// save new recipe
 		hmEventHandler.put("save", new EventHandler<ActionEvent>()
 							{
 								@Override
@@ -78,7 +81,8 @@ public class WindowNewRecipe extends WindowRecipe
 									}
 							});	
 							
-		
+		// cancel
+		// TODO: discard changes?
 		hmEventHandler.put("cancel", new EventHandler<ActionEvent>()
 								{
 									@Override

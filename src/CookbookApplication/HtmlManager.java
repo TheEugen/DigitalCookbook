@@ -20,9 +20,9 @@ public class HtmlManager
 	
 	private Document doc;
 	
-	private String recipe_title = "";
-	private String recipe_ingredients = "";
-	private String recipe_cooking = "";
+	private String recipeTitle = "";
+	private String recipeIngredients = "";
+	private String recipeCooking = "";
 	
 	private boolean searchHtmlCalled;
 	
@@ -38,10 +38,10 @@ public class HtmlManager
 	
 	public void cleanUp()
 	{
-		// erase all saved data
-		recipe_title = "";
-		recipe_ingredients = "";
-		recipe_cooking = "";
+		// erase/reset all saved data
+		recipeTitle = "";
+		recipeIngredients = "";
+		recipeCooking = "";
 		
 		searchHtmlCalled = false;
 	}
@@ -53,7 +53,7 @@ public class HtmlManager
 			throw new Exception ("HTML Manager: need to call searchAndBuildHtml before buildRecipe");
 		
 		// create new recipe
-		Recipe r = new Recipe(recipe_title.toString(), null, recipe_ingredients.toString(), recipe_cooking.toString());
+		Recipe r = new Recipe(recipeTitle.toString(), null, recipeIngredients.toString(), recipeCooking.toString());
 		
 		// cleanup for the next round
 		cleanUp();
@@ -108,7 +108,7 @@ public class HtmlManager
 		mCooking.find();
 		
 		// save the recipe title
-		recipe_title = filterTitle(mTitle.group(0));
+		recipeTitle = filterTitle(mTitle.group(0));
 		
 		// save the ingredients
 		String[] rawIngredients = mIngredients.group(0).split("\"*\"");	
@@ -116,7 +116,7 @@ public class HtmlManager
 		for(String s: rawIngredients)
 		{	
 			if((value = filterIngredient(s)) != null)
-				recipe_ingredients += value + "\n";
+				recipeIngredients += value + "\n";
 		}
 		
 		// save the instructions
@@ -124,7 +124,7 @@ public class HtmlManager
 		
 		// TODO	?????
 		for(int i = 2; i < rawCooking.length; ++i)
-			recipe_cooking += filterCooking(rawCooking[i]);
+			recipeCooking += filterCooking(rawCooking[i]);
 			
 		searchHtmlCalled = true;		
 	}

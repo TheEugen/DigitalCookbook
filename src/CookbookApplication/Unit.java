@@ -2,6 +2,7 @@ package CookbookApplication;
 
 import java.io.Serializable;
 
+// user can choose in which unit the ingredients will be shown
 public class Unit implements Serializable
 {
 	static final long serialVersionUID = 1;
@@ -14,7 +15,7 @@ public class Unit implements Serializable
 		this.title = title;
 	}
 	
-	public String getTitle() {		return title; 		}
+	public String getTitle()	{		return title; 		}
 	
 	public void setTitle(String title)
 	{

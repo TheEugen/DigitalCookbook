@@ -14,6 +14,7 @@ public class WindowEditRecipe extends WindowRecipe
 	@Override
 	protected void initHashMap(Object...args)
 	{
+		// selecting a recipe in the list
 		hmEventHandler.put("comboBox_recipe", new EventHandler <ActionEvent>()
 										{
 											@Override
@@ -35,6 +36,7 @@ public class WindowEditRecipe extends WindowRecipe
 											}
 										});
 		
+		// adding ingredient via textbox
 		hmEventHandler.put("addIngredient", new EventHandler<ActionEvent>()
 									{
 										@Override
@@ -48,6 +50,7 @@ public class WindowEditRecipe extends WindowRecipe
 										}
 									});
 		
+		// save recipe changes
 		hmEventHandler.put("save", new EventHandler<ActionEvent>()
 							{
 								@Override
@@ -61,6 +64,7 @@ public class WindowEditRecipe extends WindowRecipe
 									
 									if (validateInput(title, ingredients, cooking))
 									{
+										// TODO is this if necessary?
 										if (baseRecipe == null)
 											newRecipe = new Recipe(title, null, ingredients, cooking);
 										else
@@ -79,7 +83,8 @@ public class WindowEditRecipe extends WindowRecipe
 									}
 							});	
 							
-		
+		// discard recipe changes
+		// TODO: if changes were made, ask user if they should be discarded
 		hmEventHandler.put("cancel", new EventHandler<ActionEvent>()
 								{
 									@Override

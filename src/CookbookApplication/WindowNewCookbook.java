@@ -61,23 +61,27 @@ public class WindowNewCookbook extends Window
 	{
 		initHashMap();
 		
+		// get windowmain reference
 		windowMain = (WindowMain) stage.getOwner().getUserData();
 		
 		txt.setFill(Color.RED);
 		
-		GridPane grid = getGrid();
-		
+		// initialize grid
+		GridPane grid = getGrid();		
 		grid.setAlignment(Pos.TOP_CENTER);
 		
-		VBox vb = new VBox(10);
-		vb.setAlignment(Pos.TOP_CENTER);
-	
+		// SAVE COOKBOOK button
 		Button btn_save = new Button (windowMain.getDataManager().getText("tBtn_save"));
 		btn_save.setOnAction(hmEventHandler.get("save"));
+		
+		// CANCEL button
 		Button btn_cancel = new Button (windowMain.getDataManager().getText("tBtn_cancel"));
 		btn_cancel.setOnAction(hmEventHandler.get("cancel"));
 		tf.setPrefWidth(xRes / 1.5f);
 		
+		// create V and HBox, set alignment add children and finally add it to the grid
+		VBox vb = new VBox(10);
+		vb.setAlignment(Pos.TOP_CENTER);
 		vb.getChildren().add(txt);
 		vb.getChildren().add(new Text(windowMain.getDataManager().getText("tTxt_titleOfCB")));
 		vb.getChildren().add(tf);
@@ -85,9 +89,9 @@ public class WindowNewCookbook extends Window
 		
 		HBox hb = new HBox(10, btn_save, btn_cancel);
 		hb.setAlignment(Pos.BOTTOM_RIGHT);
-		
 		grid.add(hb, 0, 1);
 		
+		// create new scene with our grid and give reference to the stage
 		scene = new Scene(grid, xRes, yRes);
 		stage.setScene(scene);	
 	}
@@ -95,6 +99,7 @@ public class WindowNewCookbook extends Window
 	@Override
 	protected void initHashMap(Object...args)
 	{
+		// save the new cookbook
 		hmEventHandler.put("save", new EventHandler<ActionEvent>()
 							{
 								@Override
@@ -112,6 +117,8 @@ public class WindowNewCookbook extends Window
 								}
 							});
 		
+		// close new cookbook window
+		// TODO: if any changes were made ask if they should be discarded
 		hmEventHandler.put("cancel", new EventHandler<ActionEvent>()
 							{
 								@Override
