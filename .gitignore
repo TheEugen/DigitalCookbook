@@ -1,5 +1,7 @@
 .settings
 bin
+lib
+licenses
 img
 .classpath
 .project
