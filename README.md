@@ -3,6 +3,9 @@
 ## Overview
 DigitalCookbook is a Java-based desktop application designed to help users create, store, and manage a digital recipe collection. It includes a browser extension for Chrome and Firefox that allows users to import recipes directly from chefkoch.de with a single click. The extension interacts with the application via the `HTMLManager` and `JSONManager` classes, streamlining the process of adding new recipes.
 
+## Dependencies
+jsoup-1.13.1, json-20200518, commons-lang-2.6
+
 ## Features
 - **Recipe Management**: Easily add, edit, delete, and search for recipes.
 - **Browser Extension**: Import recipes directly from chefkoch.de using the provided Chrome and Firefox extensions.
